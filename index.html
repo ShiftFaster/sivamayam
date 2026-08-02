@@ -77,6 +77,7 @@
   }
 
   *{box-sizing:border-box;}
+  html,body{ max-width:100%; overflow-x:hidden; }
   html{scroll-behavior:smooth;}
   body{
     margin:0;
@@ -191,10 +192,11 @@
   .hero p.sub{ margin-top:20px; font-size:17px; color:var(--text-mute); max-width:46ch; }
   .hero-ctas{ display:flex; gap:12px; margin-top:30px; flex-wrap:wrap; }
   .hero-phone{
-    margin-top:22px; display:flex; align-items:center; gap:10px;
+    margin-top:22px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
     font-family:var(--font-mono); font-size:15px; color:var(--ink-soft);
   }
   .hero-phone a{ text-decoration:none; font-weight:600; color:var(--ink); border-bottom:2px solid var(--saffron); }
+  .hero-phone .phone-sep{ color:var(--text-mute); }
 
   .hero-media{ position:relative; }
   .hero-media img{
@@ -298,30 +300,37 @@
   .service-card p{ color:#AEB9C1; font-size:14px; }
 
   /* ---------- Fleet ---------- */
-  .fleet-grid{
-    display:grid; grid-template-columns:1.4fr 1fr; gap:20px;
+  .fleet-gallery{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
   }
-  .fleet-grid .fleet-main{ grid-row:span 2; }
   .fleet-card{
     position:relative; border-radius:16px; overflow:hidden; box-shadow:var(--shadow-soft);
     border:4px solid var(--white);
   }
-  .fleet-card img{ width:100%; height:100%; object-fit:cover; }
-  .fleet-main img{ aspect-ratio:4/3.4; }
-  .fleet-side img{ aspect-ratio:16/9.5; }
+  .fleet-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:4/3.2; }
   .fleet-caption{
     position:absolute; left:0; right:0; bottom:0;
-    background:linear-gradient(180deg, transparent, rgba(18,32,43,0.85));
-    color:var(--paper); padding:16px 16px 12px;
-    font-family:var(--font-mono); font-size:12px;
+    background:linear-gradient(180deg, transparent, rgba(18,32,43,0.88));
+    color:var(--paper); padding:18px 14px 12px;
+    font-family:var(--font-mono); font-size:11.5px; line-height:1.4;
   }
-  .fleet-more{
-    border-radius:16px; border:2px dashed var(--line); background:var(--paper-dim);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
-    text-align:center; padding:24px; color:var(--text-mute); font-size:13.5px;
-    aspect-ratio:16/9.5;
+
+  /* ---------- Packing process strip ---------- */
+  .pack-strip{ background:var(--paper-dim); }
+  .pack-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
   }
-  .fleet-more strong{ font-family:var(--font-display); color:var(--ink); font-size:22px; }
+  .pack-card{
+    position:relative; border-radius:16px; overflow:hidden; box-shadow:var(--shadow-soft);
+    border:4px solid var(--white);
+  }
+  .pack-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:4/3.4; }
+  .pack-caption{
+    position:absolute; left:0; right:0; bottom:0;
+    background:linear-gradient(180deg, transparent, rgba(18,32,43,0.88));
+    color:var(--paper); padding:18px 14px 12px;
+    font-family:var(--font-mono); font-size:11.5px; line-height:1.4;
+  }
 
   /* ---------- Testimonials ---------- */
   .testimonials{ background:var(--paper-dim); }
@@ -412,15 +421,23 @@
   @media (max-width:920px){
     nav.main-nav{ display:none; }
     .hamburger{ display:block; }
+    .nav-inner{ padding:12px 14px; gap:8px; }
+    .header-actions{ gap:6px; }
     .header-actions .btn span.txt{ display:none; }
+    .header-actions .btn{ padding:9px 12px; }
+    .header-actions #wa-header{ display:none; }
+    .lang-toggle button{ padding:6px 9px; }
+    .brand-text{ font-size:15px; }
+    .brand-text small{ font-size:9.5px; }
+    .brand-mark{ width:34px; height:34px; font-size:15px; }
     .hero-grid{ grid-template-columns:1fr; }
     .hero-media{ order:-1; }
     .about-grid{ grid-template-columns:1fr; }
     .about-media{ order:-1; }
     .service-grid{ grid-template-columns:1fr 1fr; }
     .trust-grid{ grid-template-columns:1fr 1fr; }
-    .fleet-grid{ grid-template-columns:1fr; }
-    .fleet-grid .fleet-main{ grid-row:auto; }
+    .fleet-gallery{ grid-template-columns:1fr 1fr; }
+    .pack-grid{ grid-template-columns:1fr 1fr; }
     .testi-grid{ grid-template-columns:1fr; }
     .contact-grid{ grid-template-columns:1fr; }
   }
@@ -428,6 +445,8 @@
     section{ padding:64px 18px; }
     .service-grid{ grid-template-columns:1fr; }
     .trust-grid{ grid-template-columns:1fr; }
+    .fleet-gallery{ grid-template-columns:1fr; }
+    .pack-grid{ grid-template-columns:1fr; }
     .hero-ctas{ flex-direction:column; align-items:stretch; }
     .hero-ctas .btn{ justify-content:center; }
   }
@@ -502,6 +521,8 @@
       <div class="hero-phone">
         <span data-i18n="hero_phone_label">Speak to us directly:</span>
         <a href="tel:+919629593034">+91 96295 93034</a>
+        <span class="phone-sep">/</span>
+        <a href="tel:+917639063556">+91 76390 63556</a>
       </div>
     </div>
     <div class="hero-media">
@@ -602,26 +623,63 @@
   </div>
 </section>
 
+<!-- ================= HOW WE PACK & MOVE ================= -->
+<section class="pack-strip">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="pack_eyebrow">Behind The Scenes</span>
+      <h2 data-i18n="pack_h2">How we pack &amp; move.</h2>
+      <p data-i18n="pack_p">Real photos from real jobs — every box counted, every item wrapped, every truck loaded properly before it leaves.</p>
+    </div>
+    <div class="pack-grid">
+      <div class="pack-card">
+        <img src="images/pack-workers-loading.jpg" alt="Sivamayam crew loading boxes and furniture into a truck" loading="lazy">
+        <div class="pack-caption" data-i18n="pack_cap1">Loaded carefully by our own crew</div>
+      </div>
+      <div class="pack-card">
+        <img src="images/pack-loaded-truck.jpg" alt="Truck fully packed with boxes and household goods, ready to travel" loading="lazy">
+        <div class="pack-caption" data-i18n="pack_cap2">Every box packed, labelled and secured</div>
+      </div>
+      <div class="pack-card">
+        <img src="images/pack-container-loaded.jpg" alt="Container loaded with appliances and boxes for a long-distance move" loading="lazy">
+        <div class="pack-caption" data-i18n="pack_cap3">Full household and appliance moves, done right</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= FLEET ================= -->
 <section id="fleet">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow" data-i18n="fleet_eyebrow">Our Fleet</span>
-      <h2 data-i18n="fleet_h2">Four lorries. Always on the road.</h2>
-      <p data-i18n="fleet_p">A look at the vehicles that carry your goods — tarpaulin-covered, rope-secured and ready for the next trip.</p>
+      <h2 data-i18n="fleet_h2">Vehicles ready for every route.</h2>
+      <p data-i18n="fleet_p">A look at the lorries on our routes — tarpaulin-covered, rope-secured and ready for the next trip. Number plates are blurred for privacy.</p>
     </div>
-    <div class="fleet-grid">
-      <div class="fleet-card fleet-main">
-        <img src="images/lorry-front-2.jpg" alt="Sivamayam Ashok Leyland Partner lorry, front view, loaded and covered" loading="lazy">
-        <div class="fleet-caption" data-i18n="fleet_cap1">Ashok Leyland Partner — loaded and ready</div>
+    <div class="fleet-gallery">
+      <div class="fleet-card">
+        <img src="images/lorry-side.jpg" alt="Sivamayam lorry side view with South India route board painted on the body" loading="lazy">
+        <div class="fleet-caption" data-i18n="fleet_cap1">Tamil Nadu · Kerala · Andhra · Karnataka — painted right on the truck</div>
       </div>
-      <div class="fleet-card fleet-side">
-        <img src="images/lorry-front-1.jpg" alt="Sivamayam lorry parked, cargo tied and tarpaulin secured" loading="lazy">
-        <div class="fleet-caption" data-i18n="fleet_cap2">Every load tied down, every time</div>
+      <div class="fleet-card">
+        <img src="images/truck-p6033-side.jpg" alt="Sivamayam lorry loaded and covered, route board listing South Indian states" loading="lazy">
+        <div class="fleet-caption" data-i18n="fleet_cap2">Fully loaded and tied down for a long haul</div>
       </div>
-      <div class="fleet-more" data-i18n="fleet_more">
-        <strong>+2</strong>
-        <span data-i18n="fleet_more_text">more lorries on the road across South India</span>
+      <div class="fleet-card">
+        <img src="images/lorry-front-1.jpg" alt="Sivamayam Ashok Leyland Partner lorry, front view, loaded and covered" loading="lazy">
+        <div class="fleet-caption" data-i18n="fleet_cap3">Ashok Leyland Partner — loaded and ready</div>
+      </div>
+      <div class="fleet-card">
+        <img src="images/truck-m5776.jpg" alt="Sivamayam Eicher Pro lorry, front view" loading="lazy">
+        <div class="fleet-caption" data-i18n="fleet_cap4">Eicher Pro — for bigger household &amp; office loads</div>
+      </div>
+      <div class="fleet-card">
+        <img src="images/truck-k3027.jpg" alt="Sivamayam Eicher lorry, front view" loading="lazy">
+        <div class="fleet-caption" data-i18n="fleet_cap5">Another Eicher on standby for long-distance moves</div>
+      </div>
+      <div class="fleet-card">
+        <img src="images/truck-c0743.jpg" alt="Sivamayam mini transport vehicle, front view" loading="lazy">
+        <div class="fleet-caption" data-i18n="fleet_cap6">A smaller vehicle for quick, local shifts</div>
       </div>
     </div>
   </div>
@@ -685,11 +743,17 @@
       <div class="contact-info">
         <div class="info-row">
           <div class="info-icon">📞</div>
-          <div><h4 data-i18n="ci_call_h">Call Us</h4><a href="tel:+919629593034">+91 96295 93034</a></div>
+          <div>
+            <h4 data-i18n="ci_call_h">Call Us</h4>
+            <a href="tel:+919629593034">+91 96295 93034</a><span class="phone-sep"> / </span><a href="tel:+917639063556">+91 76390 63556</a>
+          </div>
         </div>
         <div class="info-row">
           <div class="info-icon">💬</div>
-          <div><h4 data-i18n="ci_wa_h">WhatsApp</h4><a id="wa-info" href="#" target="_blank" rel="noopener">+91 96295 93034</a></div>
+          <div>
+            <h4 data-i18n="ci_wa_h">WhatsApp</h4>
+            <a id="wa-info" href="#" target="_blank" rel="noopener">+91 96295 93034</a><span class="phone-sep"> / </span><a id="wa-info-2" href="#" target="_blank" rel="noopener">+91 76390 63556</a>
+          </div>
         </div>
         <div class="info-row">
           <div class="info-icon">🗺️</div>
@@ -746,6 +810,7 @@
     <div class="footer-col">
       <h5 data-i18n="footer_contact_h">Contact</h5>
       <a href="tel:+919629593034">+91 96295 93034</a>
+      <a href="tel:+917639063556">+91 76390 63556</a>
       <a id="wa-footer" href="#" target="_blank" rel="noopener" data-i18n="btn_whatsapp">WhatsApp</a>
     </div>
   </div>
@@ -784,8 +849,9 @@
 
   // ---------- WhatsApp links ----------
   var WA_NUMBER = "919629593034";
-  function waLink(msg){
-    return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+  var WA_NUMBER_2 = "917639063556";
+  function waLink(msg, number){
+    return "https://wa.me/" + (number || WA_NUMBER) + "?text=" + encodeURIComponent(msg);
   }
   var waMsg = {
     en: "Hi Sivamayam, I'd like a quote for packing and moving.",
@@ -795,8 +861,10 @@
     var msg = waMsg[currentLang];
     ["wa-header","wa-hero","wa-about","wa-info","wa-footer","wa-float"].forEach(function(id){
       var el = document.getElementById(id);
-      if(el) el.href = waLink(msg);
+      if(el) el.href = waLink(msg, WA_NUMBER);
     });
+    var el2 = document.getElementById("wa-info-2");
+    if(el2) el2.href = waLink(msg, WA_NUMBER_2);
   }
 
   function sendToWhatsApp(e){
@@ -865,11 +933,20 @@
     s6_h: {en:"Interstate &amp; Local Transport", ta:"மாநிலங்களுக்கிடையேயான &amp; உள்ளூர் போக்குவரத்து"},
     s6_p: {en:"Same-city shifts and long interstate hauls across South India.", ta:"அதே நகரத்திற்குள் இடமாற்றம் மற்றும் தென் இந்தியா முழுவதும் நீண்ட தூர மாநில பயணங்கள்."},
     fleet_eyebrow: {en:"Our Fleet", ta:"எங்கள் வாகனங்கள்"},
-    fleet_h2: {en:"Four lorries. Always on the road.", ta:"நான்கு லாரிகள். எப்போதும் சாலையில்."},
-    fleet_p: {en:"A look at the vehicles that carry your goods — tarpaulin-covered, rope-secured and ready for the next trip.", ta:"உங்கள் பொருட்களை கொண்டு செல்லும் வாகனங்கள் — திரைச்சீலை மூடி, கயிற்றால் கட்டி அடுத்த பயணத்திற்கு தயார்."},
-    fleet_cap1: {en:"Ashok Leyland Partner — loaded and ready", ta:"அசோக் லேலேண்ட் பார்ட்னர் — ஏற்றி தயார் நிலையில்"},
-    fleet_cap2: {en:"Every load tied down, every time", ta:"ஒவ்வொரு முறையும் பொருட்கள் பத்திரமாக கட்டப்படும்"},
-    fleet_more_text: {en:"more lorries on the road across South India", ta:"மேலும் லாரிகள் தென் இந்தியா முழுவதும் சாலையில்"},
+    fleet_h2: {en:"Vehicles ready for every route.", ta:"ஒவ்வொரு பாதைக்கும் தயாராக உள்ள வாகனங்கள்."},
+    fleet_p: {en:"A look at the lorries on our routes — tarpaulin-covered, rope-secured and ready for the next trip. Number plates are blurred for privacy.", ta:"எங்கள் பாதைகளில் உள்ள லாரிகள் — திரைச்சீலை மூடி, கயிற்றால் கட்டி அடுத்த பயணத்திற்கு தயார். தனியுரிமைக்காக பதிவு எண் மறைக்கப்பட்டுள்ளது."},
+    fleet_cap1: {en:"Tamil Nadu · Kerala · Andhra · Karnataka — painted right on the truck", ta:"தமிழ்நாடு · கேரளா · ஆந்திரா · கர்நாடகா — லாரியிலேயே எழுதப்பட்டுள்ளது"},
+    fleet_cap2: {en:"Fully loaded and tied down for a long haul", ta:"நீண்ட தூர பயணத்திற்கு முழுமையாக ஏற்றி கட்டப்பட்டுள்ளது"},
+    fleet_cap3: {en:"Ashok Leyland Partner — loaded and ready", ta:"அசோக் லேலேண்ட் பார்ட்னர் — ஏற்றி தயார் நிலையில்"},
+    fleet_cap4: {en:"Eicher Pro — for bigger household &amp; office loads", ta:"ஈச்சர் ப்ரோ — பெரிய வீடு &amp; அலுவலக பொருட்களுக்கு"},
+    fleet_cap5: {en:"Another Eicher on standby for long-distance moves", ta:"நீண்ட தூர பயணங்களுக்கு மற்றொரு ஈச்சர் தயார் நிலையில்"},
+    fleet_cap6: {en:"A smaller vehicle for quick, local shifts", ta:"விரைவான உள்ளூர் இடமாற்றங்களுக்கு சிறிய வாகனம்"},
+    pack_eyebrow: {en:"Behind The Scenes", ta:"பணி நடைபெறும் விதம்"},
+    pack_h2: {en:"How we pack &amp; move.", ta:"நாங்கள் எப்படி பேக் செய்து நகர்த்துகிறோம்."},
+    pack_p: {en:"Real photos from real jobs — every box counted, every item wrapped, every truck loaded properly before it leaves.", ta:"உண்மையான வேலைகளிலிருந்து எடுக்கப்பட்ட புகைப்படங்கள் — ஒவ்வொரு பெட்டியும் கணக்கிடப்பட்டு, ஒவ்வொரு பொருளும் பொதிந்து, சரியாக ஏற்றப்பட்ட பிறகே லாரி புறப்படும்."},
+    pack_cap1: {en:"Loaded carefully by our own crew", ta:"எங்கள் சொந்த குழுவால் கவனமாக ஏற்றப்படுகிறது"},
+    pack_cap2: {en:"Every box packed, labelled and secured", ta:"ஒவ்வொரு பெட்டியும் பேக் செய்யப்பட்டு, லேபிள் இடப்பட்டு பாதுகாக்கப்படுகிறது"},
+    pack_cap3: {en:"Full household and appliance moves, done right", ta:"முழு வீட்டு பொருட்கள் &amp; உபகரணங்கள் சரியாக நகர்த்தப்படுகின்றன"},
     reviews_eyebrow: {en:"Happy Clients", ta:"மகிழ்ச்சியான வாடிக்கையாளர்கள்"},
     reviews_h2: {en:"What our customers say.", ta:"எங்கள் வாடிக்கையாளர்கள் கூறுவது."},
     t1_q: {en:"Moved our whole house from Madurai to Coimbatore in a day. Nothing broken, nothing missing.", ta:"மதுரையிலிருந்து கோயம்புத்தூருக்கு ஒரே நாளில் முழு வீட்டையும் மாற்றினார்கள். எதுவும் உடையவில்லை, எதுவும் காணவில்லை."},
